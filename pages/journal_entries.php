@@ -295,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION["journal_token"] =
                     bin2hex(random_bytes(32));
 
-                header("Location: journal_entries.php?success=1");
+                header("Location: journal_entries.php?saved=" . $entryId);
                 exit;
 
             } catch (Throwable $ex) {
@@ -313,9 +313,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-if (isset($_GET["success"])) {
-    $message = "Journal entry successfully balanced and posted!";
-    $messageType = "success";
+// After saving, show the new series number and the voucher button.
+$savedEntry = null;
+$savedId = filter_input(INPUT_GET, "saved", FILTER_VALIDATE_INT);
+
+if ($savedId) {
+    $savedStmt = $pdo->prepare(
+        "SELECT je.id, je.voucher_number, je.payee,
+                COALESCE(SUM(l.debit), 0) AS amount
+         FROM journal_entries je
+         LEFT JOIN journal_entry_lines l ON l.journal_entry_id = je.id
+         WHERE je.id = ? AND je.status = 'posted'
+         GROUP BY je.id"
+    );
+    $savedStmt->execute([$savedId]);
+    $savedEntry = $savedStmt->fetch() ?: null;
 }
 
 // Retrieve recent posted entries.
@@ -363,6 +375,29 @@ $recentEntries = $recentStmt->fetchAll();
             <p>Create and post journal entries.</p>
         </div>
 
+        <?php if ($savedEntry): ?>
+            <section class="panel">
+                <div class="alert success">
+                    Entry saved and posted. Series No.
+                    <strong><?= e($savedEntry["voucher_number"]) ?></strong>
+                </div>
+
+                <p>
+                    Payee: <strong><?= e($savedEntry["payee"] ?? "") ?></strong><br>
+                    Amount: <strong>&#8369;<?= number_format((float)$savedEntry["amount"], 2) ?></strong>
+                </p>
+
+                <a class="btn"
+                   href="journal_vouchers.php?id=<?= (int)$savedEntry["id"] ?>">
+                    Generate Journal Entry Voucher
+                </a>
+
+                <a class="btn btn-secondary" href="journal_entries.php">
+                    Enter Another Transaction
+                </a>
+            </section>
+        <?php endif; ?>
+
         <section class="panel">
 
             <h2>Create Journal Entry</h2>
@@ -377,6 +412,17 @@ $recentEntries = $recentStmt->fetchAll();
 
                 <input type="hidden" name="csrf_token"
                     value="<?= e($_SESSION["journal_token"]) ?>">
+
+                <div class="field">
+                    <label for="processing_time">Date and Time of Processing</label>
+
+                    <input
+                        type="text"
+                        id="processing_time"
+                        value=""
+                        readonly
+                    >
+                </div>
 
                 <div class="field">
                     <label for="transaction_date">Transaction Date</label>
@@ -494,7 +540,7 @@ $recentEntries = $recentStmt->fetchAll();
 
                 <p>
                     <button type="submit" class="btn" id="postButton" disabled>
-                        Post Journal Entry
+                        Save Entry
                     </button>
                 </p>
 
@@ -552,6 +598,17 @@ $recentEntries = $recentStmt->fetchAll();
 </main>
 
 <script>
+
+// Live "date and time of processing" (read-only).
+function updateClock() {
+    document.getElementById("processing_time").value =
+        new Date().toLocaleString("en-US", {
+            year: "numeric", month: "short", day: "numeric",
+            hour: "numeric", minute: "2-digit", second: "2-digit"
+        });
+}
+updateClock();
+setInterval(updateClock, 1000);
 
 function addLine() {
 

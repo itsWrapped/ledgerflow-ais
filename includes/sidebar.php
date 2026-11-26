@@ -19,6 +19,7 @@ $mainNav = [
     "journal_entries"  => ["journal_entries.php",  "Journal Entries"],
     "journal_vouchers" => ["journal_vouchers.php", "Journal Vouchers"],
     "general_ledger"   => ["general_ledger.php",   "General Ledger"],
+    "chart_of_accounts" => ["chart_of_accounts.php", "Chart of Accounts"],
 ];
 
 $isAdmin = ($_SESSION["role"] ?? "") === "admin";
