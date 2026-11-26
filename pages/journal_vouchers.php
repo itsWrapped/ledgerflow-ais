@@ -98,7 +98,7 @@ $isBalanced = ($totalDebit === $totalCredit);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Journal Vouchers | LedgerFlow AIS</title>
+    <title>Journal Entry Report | LedgerFlow AIS</title>
 
         <link rel="stylesheet" href="../assets/css/app.css">
 </head>
@@ -122,7 +122,7 @@ $isBalanced = ($totalDebit === $totalCredit);
         </div>
 
         <div class="voucher-actions no-print">
-            <a href="journal_vouchers.php" class="btn btn-secondary">Back to Voucher List</a>
+            <a href="journal_vouchers.php" class="btn btn-secondary">Back to Journal Entry Report</a>
 
             <button
                 type="button"
@@ -250,7 +250,7 @@ $isBalanced = ($totalDebit === $totalCredit);
     <?php else: ?>
 
         <div class="page-header">
-            <h1>Journal Vouchers</h1>
+            <h1>Journal Entry Report</h1>
             <p>View and print vouchers from posted journal entries.</p>
         </div>
 

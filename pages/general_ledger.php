@@ -157,7 +157,7 @@ function e($value) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Ledger | LedgerFlow AIS</title>
+    <title>Ledger Accounts | LedgerFlow AIS</title>
 
 
         <link rel="stylesheet" href="../assets/css/app.css">
@@ -171,7 +171,7 @@ function e($value) {
 <div class="page-inner">
 
     <div class="page-header">
-            <h1>General Ledger</h1>
+            <h1>Ledger Accounts</h1>
             <p>View posted transactions and account balances.</p>
         </div>
 
@@ -327,7 +327,7 @@ function e($value) {
         <?php else: ?>
 
             <p class="empty-message">
-                Select an account above to view its General Ledger.
+                Select an account above to view its ledger.
             </p>
 
         <?php endif; ?>

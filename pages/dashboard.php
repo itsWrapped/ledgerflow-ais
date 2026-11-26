@@ -295,7 +295,7 @@ $role = e(ucwords(str_replace("_", " ", $_SESSION["role"] ?? "")));
             <?php endif; ?>
 
             <p style="margin: 16px 0 0;">
-                <a href="journal_vouchers.php">View all vouchers</a>
+                <a href="journal_vouchers.php">Open Journal Entry Report</a>
             </p>
         </div>
 

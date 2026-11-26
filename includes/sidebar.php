@@ -16,9 +16,9 @@ $sbEsc = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, "UTF-8");
 
 $mainNav = [
     "dashboard"        => ["dashboard.php",        "Dashboard"],
-    "journal_entries"  => ["journal_entries.php",  "Journal Entries"],
-    "journal_vouchers" => ["journal_vouchers.php", "Journal Vouchers"],
-    "general_ledger"   => ["general_ledger.php",   "General Ledger"],
+    "journal_entries"  => ["journal_entries.php",  "Incoming Transaction"],
+    "journal_vouchers" => ["journal_vouchers.php", "Journal Entry Report"],
+    "general_ledger"   => ["general_ledger.php",   "Ledger Accounts"],
     "chart_of_accounts" => ["chart_of_accounts.php", "Chart of Accounts"],
 ];
 
@@ -47,6 +47,11 @@ $isAdmin = ($_SESSION["role"] ?? "") === "admin";
     </nav>
 
     <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <strong><?= $sbEsc($_SESSION["full_name"] ?? "User") ?></strong>
+            <span><?= $sbEsc(ucwords(str_replace("_", " ", $_SESSION["role"] ?? ""))) ?></span>
+        </div>
+
         <form action="../auth/logout.php" method="POST">
             <input type="hidden" name="csrf_token"
                    value="<?= $sbEsc($_SESSION["csrf_token"]) ?>">

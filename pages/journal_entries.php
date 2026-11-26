@@ -358,7 +358,7 @@ $recentEntries = $recentStmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Journal Entries | LedgerFlow AIS</title>
+    <title>Incoming Transaction | LedgerFlow AIS</title>
 
         <link rel="stylesheet" href="../assets/css/app.css">
 </head>
@@ -371,7 +371,7 @@ $recentEntries = $recentStmt->fetchAll();
     <div class="page-inner">
 
         <div class="page-header">
-            <h1>Journal Entries</h1>
+            <h1>Incoming Transaction</h1>
             <p>Create and post journal entries.</p>
         </div>
 

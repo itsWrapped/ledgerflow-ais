@@ -273,3 +273,7 @@ td form { margin: 0; }
 .nowrap { white-space: nowrap; }
 a { color: var(--navy-hover); }
 .note { margin: 0 0 16px; color: var(--muted); font-size: 13px; }
+
+.sidebar-user { margin-bottom: 10px; padding: 0 12px; line-height: 1.4; }
+.sidebar-user strong { display: block; font-size: 14px; }
+.sidebar-user span { font-size: 12px; color: #cbd5e1; }
